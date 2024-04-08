@@ -1,3 +1,11 @@
+/*
+ * @Date: 2024-03-30 09:51:31
+ * @LastEditors: git config user.name && git config user.email
+ * @LastEditTime: 2024-04-08 10:15:29
+ * @FilePath: \mapDemoJS\src\router\index.js
+ * @Description:
+ * @Author: ms-tlzksaoastkh
+ */
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
@@ -8,14 +16,6 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
     }
   ]
 })

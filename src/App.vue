@@ -1,7 +1,7 @@
 <!--
  * @Date: 2024-03-30 09:51:31
- * @LastEditors: jmelon66 961255554@qq.com
- * @LastEditTime: 2024-04-04 11:00:13
+ * @LastEditors: git config user.name && git config user.email
+ * @LastEditTime: 2024-04-08 10:39:21
  * @FilePath: \mapDemoJS\src\App.vue
  * @Description: 
 -->
@@ -11,20 +11,18 @@ import HomeView from './views/HomeView.vue'
 </script>
 
 <template>
-  <header>
-    <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
+  <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
 
-    <div class="wrapper">
-      <HomeView msg="You did it!" />
+  <div class="wrapper">
+    <HomeView msg="You did it!" />
 
-      <!-- <nav>
+    <!-- <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
       </nav> -->
-    </div>
-  </header>
+  </div>
 
-  <RouterView />
+  <!-- <RouterView /> -->
 </template>
 
 <style scoped>
