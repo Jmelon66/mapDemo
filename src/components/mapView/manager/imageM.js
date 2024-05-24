@@ -13,16 +13,33 @@ function RGBtoHSI([r, g, b]) {
   const R = r / 255
   const G = g / 255
   const B = b / 255
-  const theTa =
-    R === 0 && G === 0 && B === 0
-      ? 0
-      : (Math.acos((R - G + R - B) / 2 / Math.sqrt(Math.pow(R - G, 2) + (R - B) * (G - B))) * 180) /
-        Math.PI
-  const H = B <= G ? theTa : 360 - theTa
-  const sA = R + G + B
-  const sB = 1 - Math.min(...[R, G, B]) * 3
-  const S = sA === 0 ? 0 : sB / sA
-  const I = (R + G + B) / 3
+  const max = Math.max(R,G,B)
+  const min = Math.min(R,G,B)
+  const diff = max - min
+  let H = 0
+  if(diff===0){
+    H = 0
+  } else if (max===R&&G>B){
+    H = 60 * (G-B)/diff
+  }else if (max===R){
+    H = 360+60 * (G-B)/diff
+  }else if (max===G){
+    H = 120+60 * (B-R)/diff
+  }else if (max===B){
+    H = 240+60 * (R-G)/diff
+  }
+  const S = max===0?0:(1-min/max)
+  const I = max
+  // const theTa =
+  //   R === 0 && G === 0 && B === 0
+  //     ? 0
+  //     : (Math.acos((R - G + R - B) / 2 / Math.sqrt(Math.pow(R - G, 2) + (R - B) * (G - B))) * 180) /
+  //       Math.PI
+  // const H = B <= G ? theTa : 360 - theTa
+  // const sA = R + G + B
+  // const sB = 1 - Math.min(...[R, G, B]) * 3
+  // const S = sA === 0 ? 0 : sB / sA
+  // const I = (R + G + B) / 3
   return [H, S, I]
 }
 function HSItoRGB([H, S, I]) {
