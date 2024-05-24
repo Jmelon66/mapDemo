@@ -43,23 +43,43 @@ function RGBtoHSI([r, g, b]) {
   return [H, S, I]
 }
 function HSItoRGB([H, S, I]) {
-  if (H >= 120 && H <= 240) {
-    H -= 120
-  } else if (H >= 240 && H <= 360) {
-    H -= 240
+  const hi = Math.floor([H/60] % 6)
+  const f = (H/60)-hi
+  const p = I * (1-S)
+  const q = I * (1-f*S)
+  const t = I * (1-(1-f)*S)
+  switch(hi){
+    case 0:
+      return [I,t,p]
+    case 1:
+      return [q,I,p]
+    case 2:
+      return [p,I,t]
+    case 3:
+      return [p,q,I]
+    case 4:
+      return [t,p,I]
+    case 5:
+      return [I,p,q]
   }
-  const HA = (H * Math.PI) / 180
-  const ca = Math.cos(Math.PI / 3 - HA)
-  const a1 = I * (1 - S)
-  const a2 = ca === 0 ? 0 : I * (1 + (S * Math.cos(HA)) / ca)
-  const a3 = 3 * I - (a1 + a2)
-  if (H >= 120 && H <= 240) {
-    return [a1, a2, a3]
-  } else if (H >= 240 && H <= 360) {
-    return [a3, a1, a2]
-  } else {
-    return [a2, a3, a1]
-  }
+  return [0,0,0]
+  // if (H >= 120 && H <= 240) {
+  //   H -= 120
+  // } else if (H >= 240 && H <= 360) {
+  //   H -= 240
+  // }
+  // const HA = (H * Math.PI) / 180
+  // const ca = Math.cos(Math.PI / 3 - HA)
+  // const a1 = I * (1 - S)
+  // const a2 = ca === 0 ? 0 : I * (1 + (S * Math.cos(HA)) / ca)
+  // const a3 = 3 * I - (a1 + a2)
+  // if (H >= 120 && H <= 240) {
+  //   return [a1, a2, a3]
+  // } else if (H >= 240 && H <= 360) {
+  //   return [a3, a1, a2]
+  // } else {
+  //   return [a2, a3, a1]
+  // }
 }
 function HucChange(imageData, rgbC) {
   const hsiC = RGBtoHSI(rgbC)
