@@ -2,7 +2,7 @@
  * @Author: jmelon66 961255554@qq.com
  * @Date: 2024-04-04 10:18:12
  * @LastEditors: git config user.name && git config user.email
- * @LastEditTime: 2024-04-10 13:43:03
+ * @LastEditTime: 2024-06-02 18:01:38
  * @FilePath: \mapDemoJS\src\components\mapView\index.js
  * @Description: 主函数
  */
@@ -58,6 +58,7 @@ class MapView {
     element.addEventListener('mousemove', this.mousehoverListener.bind(this))
     window.addEventListener('mouseup', this.mouseupListener.bind(this))
     element.addEventListener('mouseleave', this.mouseleaveListener.bind(this))
+    element.addEventListener('wheel', this.wheelListener.bind(this))
   }
   // 事件监听
   mouseClientX = 0
@@ -89,15 +90,32 @@ class MapView {
   mouseleaveListener(e) {
     this.mouseType = 0
   }
+  // 滚轮
+  wheelListener(e) {
+    if (e.deltaY > 0) {
+      this.zoom -= 0.1
+    } else {
+      this.zoom += 0.1
+    }
+    if (this.zoom > 15) {
+      this.zoom = 15
+    }
+    if (this.zoom < 0.5) {
+      this.zoom = 0.5
+    }
+    if (!this.animationIndex) {
+      this.animationIndex = requestAnimationFrame(this.dragCanvas.bind(this))
+    }
+  }
   // css拖动
   zoom = 1
   dragCanvas() {
-    console.log('change')
+    // 防止多次刷新
     cancelAnimationFrame(this.animationIndex)
     this.animationIndex = null
     const { canvas } = this
-    // canvas.style.translateX =
-    canvas.style.transform = `translateX(${this.translateX}px) translateY(${this.translateY}px)`
+    canvas.style.transform = `translateX(${this.translateX}px) translateY(${this.translateY}px) scale(${this.zoom})`
   }
+  zoomCanvas() {}
 }
 export default MapView

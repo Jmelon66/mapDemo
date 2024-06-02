@@ -1,7 +1,7 @@
 /*
  * @Date: 2024-04-04 10:20:06
  * @LastEditors: git config user.name && git config user.email
- * @LastEditTime: 2024-04-29 15:34:55
+ * @LastEditTime: 2024-05-27 14:05:10
  * @FilePath: \mapDemoJS\src\components\mapView\manager\imageM.js
  * @Description:
  * @Author: ms-tlzksaoastkh
@@ -13,22 +13,22 @@ function RGBtoHSI([r, g, b]) {
   const R = r / 255
   const G = g / 255
   const B = b / 255
-  const max = Math.max(R,G,B)
-  const min = Math.min(R,G,B)
+  const max = Math.max(R, G, B)
+  const min = Math.min(R, G, B)
   const diff = max - min
   let H = 0
-  if(diff===0){
+  if (diff === 0) {
     H = 0
-  } else if (max===R&&G>B){
-    H = 60 * (G-B)/diff
-  }else if (max===R){
-    H = 360+60 * (G-B)/diff
-  }else if (max===G){
-    H = 120+60 * (B-R)/diff
-  }else if (max===B){
-    H = 240+60 * (R-G)/diff
+  } else if (max === R && G > B) {
+    H = (60 * (G - B)) / diff
+  } else if (max === R) {
+    H = 360 + (60 * (G - B)) / diff
+  } else if (max === G) {
+    H = 120 + (60 * (B - R)) / diff
+  } else if (max === B) {
+    H = 240 + (60 * (R - G)) / diff
   }
-  const S = max===0?0:(1-min/max)
+  const S = max === 0 ? 0 : 1 - min / max
   const I = max
   // const theTa =
   //   R === 0 && G === 0 && B === 0
@@ -43,26 +43,26 @@ function RGBtoHSI([r, g, b]) {
   return [H, S, I]
 }
 function HSItoRGB([H, S, I]) {
-  const hi = Math.floor([H/60] % 6)
-  const f = (H/60)-hi
-  const p = I * (1-S)
-  const q = I * (1-f*S)
-  const t = I * (1-(1-f)*S)
-  switch(hi){
+  const hi = Math.floor([H / 60] % 6)
+  const f = H / 60 - hi
+  const p = I * (1 - S)
+  const q = I * (1 - f * S)
+  const t = I * (1 - (1 - f) * S)
+  switch (hi) {
     case 0:
-      return [I,t,p]
+      return [I, t, p]
     case 1:
-      return [q,I,p]
+      return [q, I, p]
     case 2:
-      return [p,I,t]
+      return [p, I, t]
     case 3:
-      return [p,q,I]
+      return [p, q, I]
     case 4:
-      return [t,p,I]
+      return [t, p, I]
     case 5:
-      return [I,p,q]
+      return [I, p, q]
   }
-  return [0,0,0]
+  return [0, 0, 0]
   // if (H >= 120 && H <= 240) {
   //   H -= 120
   // } else if (H >= 240 && H <= 360) {
@@ -92,8 +92,8 @@ function HucChange(imageData, rgbC) {
     rgb.push(imageData[i + 3])
     const hsi = RGBtoHSI(rgb)
     hsi[0] += hsiC[0]
-    hsi[1] += hsiC[1]
-    hsi[2] += hsiC[2]
+    // hsi[1] += hsiC[1]
+    // hsi[2] += hsiC[2]
     resA.push(...HSItoRGB(hsi).map((n) => Math.floor(n * 255)))
     resA.push(imageData[i + 3])
   }
